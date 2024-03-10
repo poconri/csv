@@ -1,3 +1,4 @@
+import { PrismaClient } from '@prisma/client';
 import {ISOStringDate} from './csv-object';
 
 declare global {
@@ -6,6 +7,6 @@ declare global {
     }
 
     interface ObjectConstructor {
-        keys<T>(o: T): (keyof T & string)[];
+        entries<T>(o: T): [keyof T, T[keyof T]][];
     }
 }

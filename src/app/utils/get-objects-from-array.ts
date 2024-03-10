@@ -9,7 +9,7 @@ import {
 import { isNumber, isString, isValidDate } from "../types/type-guards";
 
 const MAPPED_PROPERTIES: Record<
-	string,
+	`${number}`,
 	{
 		key: keyof ResourceAccommodation;
 		typeGuard: (value: string) => boolean;
@@ -27,7 +27,7 @@ const MAPPED_PROPERTIES: Record<
 		getValue: getNumber,
 	},
 	"2": {
-		key: "id",
+		key: "rowId",
 		typeGuard: isNumber,
 		getValue: getNumber,
 	},
@@ -233,7 +233,13 @@ const MAPPED_PROPERTIES: Record<
 	},
 } as const;
 
-export const getObjectsFromArray = (array: string[][]) => {
+export type CsvResults = {
+	duplicatedColumns: Record<string, string>[];
+	nonDuplicatedColumns: ResourceAccommodation[];
+	invalidValues: Record<string, string>[];
+};
+
+export const getObjectsFromArray = (array: CSVArrays):CsvResults => {
 	const keys = array[0];
 	const rows = array.slice(1);
 
@@ -262,7 +268,7 @@ export const getObjectsFromArray = (array: string[][]) => {
 				duplicatedColumnsAmount++;
 			} else {
 				const counter = index - duplicatedColumnsAmount;
-				const properties = MAPPED_PROPERTIES[counter];
+				const properties = MAPPED_PROPERTIES[`${counter}`];
 
 				Object.assign(objectWithoutDuplicates, {
 					[properties.key]: properties.typeGuard(value)

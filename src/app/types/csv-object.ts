@@ -3,7 +3,7 @@ export type ISOStringDate = `${number}-${number}-${number}T${number}:${number}:$
 export type ResourceAccommodation = {
     latitude: number,
     longitude: number,
-    id: number,
+    rowId: number,
     title: string,
     advertiser: string,
     description: string,
@@ -44,4 +44,10 @@ export type ResourceAccommodation = {
     floors: number | null,
     isPetFriendly: boolean,
     hasBalcony: boolean,
+}
+
+export type SavedResourceAccommodation = ResourceAccommodation & {
+    id: number,
+    createdAt: ISOStringDate,
+    updatedAt: ISOStringDate,
 }

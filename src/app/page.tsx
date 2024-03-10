@@ -1,22 +1,16 @@
 'use client';
 import { useCSVReader } from 'react-papaparse';
 import { getObjectsFromArray } from './utils/get-objects-from-array';
-
-type CSVResults = {
-  data: string[][];
-  errors: string[];
-  meta: {
-    delimiter: string;
-    linebreak: string;
-    aborted: boolean;
-    fields: string[];
-    truncated: boolean;
-    cursor: number;
-  }
-}
+import { useCsvStore } from './store/useCsvStore';
 
 export default function Home() {
   const { CSVReader } = useCSVReader();
+
+  const {
+    isLoading,
+    handleCsvDataChange,
+    handleSaveData,
+   } = useCsvStore(({isLoading,handleCsvDataChange, handleSaveData})=>({isLoading,handleCsvDataChange, handleSaveData}));
 
   return (
     <main>
@@ -26,7 +20,7 @@ export default function Home() {
         }}
       >
         <CSVReader
-          onUploadAccepted={(data:CSVResults) => console.log(getObjectsFromArray(data.data))}
+          onUploadAccepted={handleCsvDataChange}
           config= {{
             encoding: "utf-8",
           }}
@@ -54,6 +48,9 @@ export default function Home() {
       )}
         </CSVReader>
       </div>
+      <button
+        onClick={handleSaveData}
+      >guardanding</button>
     </main>
   );
 }

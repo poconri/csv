@@ -13,7 +13,7 @@ const METHOD = {
 
 export type TypeGuardFunction<T> = (data: unknown) => data is T;
 
-export class http {
+export class Http {
 	private httpFetch = async <T, U = undefined>(
 		method: (typeof METHOD)[keyof typeof METHOD],
 		path: string,
