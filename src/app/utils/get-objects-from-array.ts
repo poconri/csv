@@ -240,6 +240,14 @@ export type CsvResults = {
 };
 
 export const getObjectsFromArray = (array: CSVArrays):CsvResults => {
+	if(array.length === 0){
+		return {
+			duplicatedColumns: [],
+			nonDuplicatedColumns: [],
+			invalidValues: [],
+		}
+	}
+
 	const keys = array[0];
 	const rows = array.slice(1);
 
@@ -278,7 +286,7 @@ export const getObjectsFromArray = (array: CSVArrays):CsvResults => {
 
 				if (!properties.typeGuard(value)) {
 					invalidValues.push({
-						[`${keys[counter]}`]: `"${value}" is not valid on row ${
+						[`${keys[counter]}`]: `"${value}" no es un valor valido ${
 							indexRow + 1
 						}`,
 					});
